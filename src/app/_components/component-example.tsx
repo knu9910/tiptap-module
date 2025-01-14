@@ -1,7 +1,7 @@
 "use client";
 import { EditorProvider } from "@/components/tiptap/context/editor-context";
 import { cn } from "@/lib/utils";
-import { TiptapExample } from "./tiptap-example";
+import { TiptapExample } from "../../components/tiptap/core/tiptap-example";
 import { TiptapViewer } from "@/components/tiptap/core";
 import { useContentStore } from "@/components/tiptap/plugin";
 

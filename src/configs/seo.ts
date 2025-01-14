@@ -1,6 +1,6 @@
-import type { Metadata } from 'next/types';
+import type { Metadata } from "next/types";
 
-export const SEO_DEFAULT_TITLE = 'MontblancDePari';
+export const SEO_DEFAULT_TITLE = "TiptapExample";
 
 export const SEO_DEFAULT_DESCRIPTION = ``;
 
@@ -13,6 +13,8 @@ export const MAIN_METADATA: Metadata = {
   },
   description: SEO_DEFAULT_DESCRIPTION,
   keywords: SEO_DEFAULT_KEYWORD,
-  metadataBase: new URL(process.env.NEXT_PUBLIC_WEB_URL || 'http://localhost:3000'),
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_WEB_URL || "http://localhost:3000"
+  ),
   applicationName: SEO_DEFAULT_TITLE,
 };

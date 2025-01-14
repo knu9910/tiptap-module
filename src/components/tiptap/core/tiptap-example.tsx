@@ -1,6 +1,6 @@
 "use client";
 import { EditorContent } from "@tiptap/react";
-import { useEditorContext } from "../../components/tiptap/context/editor-context";
+import { useEditorContext } from "../context/editor-context";
 import {
   TipTapFontStyle,
   TipTapFontColor,
@@ -16,7 +16,7 @@ import {
   LoadContent,
   Preview,
   UrlLink,
-} from "../../components/tiptap/menus";
+} from "../menus";
 import { useEffect } from "react";
 import { useContentStore } from "@/components/tiptap/plugin";
 type TipTapProps = {
