@@ -1,7 +1,12 @@
+import { ComponentExample } from "./_components/component-example";
+
 export default function Home() {
   return (
-    <main>
-      <h1 className="text-3xl">Hello, Next.js</h1>
+    <main className="p-52">
+      <h2 className="text-2xl font-semibold mb-20">
+        Tiptap 모듈화 사용 예시 입니다.
+      </h2>
+      <ComponentExample />
     </main>
   );
 }
