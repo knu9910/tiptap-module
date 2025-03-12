@@ -1,4 +1,4 @@
-import { FaFont } from 'react-icons/fa';
+import { AiOutlineFontColors } from 'react-icons/ai';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { useEditorContext } from '../context/editor-context';
 import { useFontConfigStore } from '../plugin';
@@ -28,10 +28,8 @@ export const TipTapFontColor = ({ className }: Readonly<Props>) => {
     <>
       {/* 색상 선택 */}
       <Popover>
-        <PopoverTrigger
-          className={cn('hover:bg-gray-200 p-2 rounded cursor-pointer px-2 flex items-center', className)}
-        >
-          <FaFont style={{ color: selectedColor }} />
+        <PopoverTrigger className={cn('hover:bg-gray-200 p-1  cursor-pointer px-2 flex items-center', className)}>
+          <AiOutlineFontColors style={{ color: selectedColor }} className="size-6" />
         </PopoverTrigger>
         <PopoverContent className="flex flex-wrap justify-around flex-col h-[160px] w-[200px] bg-slate-100 rounded-md">
           {Object.values(Colors).map((color, idx) => (

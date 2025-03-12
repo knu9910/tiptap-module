@@ -1,4 +1,4 @@
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select/select';
 import { FontOptions } from '../plugin/tiptap-font-config/constants';
 import { useEditorContext } from '../context/editor-context';
 import { cn } from '@/lib/utils';

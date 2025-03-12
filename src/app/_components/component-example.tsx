@@ -1,9 +1,9 @@
 "use client";
-import { EditorProvider } from "@/components/tiptap/context/editor-context";
+import { EditorProvider } from "@/components/ui/tiptap/context/editor-context";
 import { cn } from "@/lib/utils";
-import { TiptapExample } from "../../components/tiptap/core/tiptap-example";
-import { TiptapViewer } from "@/components/tiptap/core";
-import { useContentStore } from "@/components/tiptap/plugin";
+import { TiptapExample } from "../../components/ui/tiptap/core/tiptap-example";
+import { TiptapViewer } from "@/components/ui/tiptap/core";
+import { useContentStore } from "@/components/ui/tiptap/plugin";
 
 type Props = React.HTMLAttributes<HTMLElement>;
 

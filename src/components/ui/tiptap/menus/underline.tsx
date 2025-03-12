@@ -1,4 +1,4 @@
-import { RxUnderline } from 'react-icons/rx';
+import { MdFormatUnderlined } from 'react-icons/md';
 
 import { useEditorContext } from '../context/editor-context';
 import { cn } from '@/lib/utils';
@@ -13,8 +13,8 @@ export const UnderLine = ({ className }: Readonly<Props>) => {
   const toggleUnderline = () => editor.chain().toggleUnderline().run();
 
   return (
-    <button className={cn('hover:bg-gray-200 p-2 rounded', className)} onClick={toggleUnderline}>
-      <RxUnderline />
+    <button className={cn('hover:bg-gray-200 p-1', className)} onClick={toggleUnderline}>
+      <MdFormatUnderlined className="size-6" />
     </button>
   );
 };
