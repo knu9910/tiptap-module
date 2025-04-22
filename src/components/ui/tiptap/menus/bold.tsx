@@ -12,8 +12,8 @@ export const Bold = ({ className }: Readonly<Props>) => {
   const toggleBold = () => editor.chain().toggleBold().run();
 
   return (
-    <button className={cn('hover:bg-gray-200 p-1', className)} onClick={toggleBold}>
-      <MdFormatBold className="size-6" />
+    <button type='button' className={cn('hover:bg-gray-200 p-1', className)} onClick={toggleBold}>
+      <MdFormatBold className='size-6' />
     </button>
   );
 };

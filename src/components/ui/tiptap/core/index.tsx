@@ -1,2 +1,2 @@
-export * from "./tiptap-viewer";
-export * from "./tiptap-example";
+export * from './tiptap-viewer';
+export * from './tiptap-example';

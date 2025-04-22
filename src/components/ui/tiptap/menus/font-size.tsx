@@ -14,6 +14,10 @@ export const TipTapFontSize = ({ className }: Readonly<Props>) => {
     editor.chain().setFontSize(size).run();
   };
 
+  const toggleSize = () => {
+    // Implementation of toggleSize function
+  };
+
   return (
     <>
       {/* 폰트 크기 설정 메뉴 */}
@@ -26,7 +30,7 @@ export const TipTapFontSize = ({ className }: Readonly<Props>) => {
         >
           <SelectValue placeholder={'12px'} /> {/* 선택된 폰트 크기를 표시 */}
         </SelectTrigger>
-        <SelectContent className="h-72 w-48 rounded-md border overflow-y-auto">
+        <SelectContent className='h-72 w-48 rounded-md border overflow-y-auto'>
           {Object.values(Pxs).map((px) => (
             <SelectItem key={px} value={px}>
               {px}

@@ -20,12 +20,12 @@ export const Highlight = ({ className }: Readonly<Props>) => {
       <PopoverTrigger className={cn('hover:bg-gray-200 flex px-2 cursor-pointer items-center', className)}>
         <HiOutlineColorSwatch />
       </PopoverTrigger>
-      <PopoverContent className="flex flex-wrap justify-around flex-col h-[160px] w-[200px] bg-slate-100 rounded-md">
+      <PopoverContent className='flex flex-wrap justify-around flex-col h-[160px] w-[200px] bg-slate-100 rounded-md'>
         {Object.values(Colors).map((color) => (
           <div
             key={color}
             onClick={() => setHighlight(color)} // Assuming setHighlight changes the background color of text
-            className="w-[16px] h-[16px] rounded-sm "
+            className='w-[16px] h-[16px] rounded-sm '
             style={{ backgroundColor: color }}
           ></div>
         ))}

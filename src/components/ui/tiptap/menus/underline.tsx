@@ -13,8 +13,8 @@ export const UnderLine = ({ className }: Readonly<Props>) => {
   const toggleUnderline = () => editor.chain().toggleUnderline().run();
 
   return (
-    <button className={cn('hover:bg-gray-200 p-1', className)} onClick={toggleUnderline}>
-      <MdFormatUnderlined className="size-6" />
+    <button type='button' className={cn('hover:bg-gray-200 p-1', className)} onClick={toggleUnderline}>
+      <MdFormatUnderlined className='size-6' />
     </button>
   );
 };

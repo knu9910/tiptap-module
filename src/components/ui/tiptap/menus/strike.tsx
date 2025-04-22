@@ -12,7 +12,7 @@ export const Strike = ({ className }: Readonly<Props>) => {
   const toggleStrike = () => editor.chain().toggleStrike().run();
 
   return (
-    <button className={cn('hover:bg-gray-200 p-2 rounded', className)} onClick={toggleStrike}>
+    <button type='button' className={cn('hover:bg-gray-200 p-2 rounded', className)} onClick={toggleStrike}>
       <FaStrikethrough />
     </button>
   );

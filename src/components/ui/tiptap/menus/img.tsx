@@ -12,37 +12,32 @@ export const Img = ({ className }: Readonly<Props>) => {
   if (!editor) return null;
 
   const insertLocalImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]; // 첫 번째 파일 선택
+    const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
         const base64Image = reader.result as string;
-        console.log('File loaded successfully', base64Image); // base64 출력 확인
-
-        // 이미지를 삽입하는 부분
         editor.chain().setImage({ src: base64Image }).run();
       };
-      reader.readAsDataURL(file); // 파일을 base64로 읽기
-    } else {
-      console.log('No file selected');
+      reader.readAsDataURL(file);
     }
   };
 
   return (
     <Popover>
-      {/* 이미지 삽입 메뉴 */}
-      <PopoverTrigger className={cn('cursor-pointer', className)}>
-        <HiOutlinePhotograph className="text-gray-700" />
+      <PopoverTrigger className={cn('w-full h-full flex items-center justify-center transition-all', className)}>
+        <HiOutlinePhotograph className='text-gray-500 size-5 hover:text-gray-900 transition-colors' />
       </PopoverTrigger>
-      <PopoverContent className="p-4 w-64">
-        <Input
-          type="file"
-          accept="image/*"
-          onChange={(e) => {
-            insertLocalImage(e); // 이미지 삽입 함수 호출
-          }}
-          className="mb-4"
-        />
+      <PopoverContent className='w-96 p-6 space-y-4 bg-white rounded-xl shadow-lg border border-gray-100'>
+        <div className='space-y-4'>
+          <h3 className='text-lg font-semibold text-gray-900'>이미지 추가</h3>
+          <Input
+            type='file'
+            accept='image/*'
+            onChange={insertLocalImage}
+            className='w-full cursor-pointer file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition-all'
+          />
+        </div>
       </PopoverContent>
     </Popover>
   );

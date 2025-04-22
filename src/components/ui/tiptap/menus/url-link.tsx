@@ -1,54 +1,51 @@
-import { HiLink } from 'react-icons/hi'; // 'react-icons/hi'에서 Link 아이콘을 임포트
+import { HiLink } from 'react-icons/hi';
 import { useEditorContext } from '../context/editor-context';
 import { useState } from 'react';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
-export const UrlLink = () => {
+type Props = React.HTMLAttributes<HTMLElement>;
+
+export const UrlLink = ({ className }: Readonly<Props>) => {
   const editor = useEditorContext();
   const [link, setLink] = useState<string>('');
-  const [open, setOpen] = useState(false); // Popover 열기 상태
+  const [open, setOpen] = useState(false);
 
   if (!editor) return null;
 
   const handleLinkClick = () => {
     if (link) {
-      // 현재 선택된 텍스트에 링크 추가
       editor.chain().focus().extendMarkRange('link').setLink({ href: link }).run();
-      setLink(''); // 링크 추가 후 입력 필드 초기화
-      setOpen(false); // Popover 닫기
+      setLink('');
+      setOpen(false);
     }
   };
 
   return (
-    <div>
-      <Popover open={open} onOpenChange={setOpen}>
-        <PopoverTrigger className="hover:bg-gray-200 flex items-center h-[100%] p-2">
-          <HiLink /> {/* react-icons에서 아이콘 사용 */}
-        </PopoverTrigger>
-
-        <PopoverContent className="w-72 p-4 bg-white border rounded-md shadow-md">
-          <div>
-            <h3 className="text-lg font-semibold mb-2">링크 추가</h3>
-
-            <Input
-              type="text"
-              placeholder="링크를 넣어주세요"
-              value={link}
-              onChange={(e) => setLink(e.target.value)}
-              className="w-full p-2 border rounded-md mb-4"
-            />
-
-            <Button
-              onClick={handleLinkClick}
-              className="w-full p-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-            >
-              링크 넣기
-            </Button>
-          </div>
-        </PopoverContent>
-      </Popover>
-    </div>
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger className={cn('w-full h-full flex items-center justify-center transition-all', className)}>
+        <HiLink className='text-gray-500 size-5 hover:text-gray-900 transition-colors' />
+      </PopoverTrigger>
+      <PopoverContent className='w-96 p-6 space-y-4 bg-white rounded-xl shadow-lg border border-gray-100'>
+        <div className='space-y-4'>
+          <h3 className='text-lg font-semibold text-gray-900'>링크 추가</h3>
+          <Input
+            type='text'
+            placeholder='https://example.com'
+            value={link}
+            onChange={(e) => setLink(e.target.value)}
+            className='w-full focus-visible:ring-0 border-gray-200 focus:border-blue-500 transition-colors'
+          />
+          <Button
+            onClick={handleLinkClick}
+            className='w-full bg-blue-500 hover:bg-blue-600 text-white transition-all py-2.5 rounded-lg font-medium'
+          >
+            링크 추가
+          </Button>
+        </div>
+      </PopoverContent>
+    </Popover>
   );
 };

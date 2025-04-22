@@ -2,6 +2,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { FontOptions } from '../plugin/tiptap-font-config/constants';
 import { useEditorContext } from '../context/editor-context';
 import { cn } from '@/lib/utils';
+import { Md2kPlus } from 'react-icons/md';
 
 type Props = React.HTMLAttributes<HTMLElement>;
 
@@ -20,14 +21,14 @@ export const TipTapFontStyle = ({ className }: Readonly<Props>) => {
       {/* 폰트 설정 메뉴 */}
       <Select onValueChange={changeFont}>
         <SelectTrigger
-          className={cn('hover:bg-gray-200 rounded cursor-pointer w-2/12 flex justify-between', className)}
+          className={cn('w-full h-full border-0 focus:ring-0 focus:outline-none cursor-pointer', className)}
           tabIndex={-1}
         >
-          <SelectValue placeholder={'맑은고딕'} /> {/* 선택된 폰트를 표시 */}
+          <SelectValue placeholder='맑은고딕' />
         </SelectTrigger>
         <SelectContent>
           {Object.keys(FontOptions).map((fontName) => (
-            <SelectItem key={fontName} value={fontName}>
+            <SelectItem key={fontName} value={fontName} className='cursor-pointer'>
               {fontName}
             </SelectItem>
           ))}
