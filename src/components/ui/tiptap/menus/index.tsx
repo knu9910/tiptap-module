@@ -14,5 +14,4 @@ export * from './load-content';
 export * from './url-link';
 export * from './text-align-right';
 export * from './text-align-center';
-export * from './text-align-justify';
 export * from './text-align-left';

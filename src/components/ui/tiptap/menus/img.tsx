@@ -1,6 +1,5 @@
 import { useEditorContext } from '../context/editor-context';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
-import { Input } from '@/components/ui/input';
 import { cn } from '@/lib/utils';
 import { ImagePlus } from 'lucide-react';
 import { IconButton } from './common/icon-button';
