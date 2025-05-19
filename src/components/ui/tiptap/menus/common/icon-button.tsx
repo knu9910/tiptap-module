@@ -9,7 +9,7 @@ export const IconButton = ({ children, className, ...props }: Readonly<IconButto
   return (
     <button
       type="button"
-      className={cn('text-gray-500 size-5 flex hover:text-gray-900 transition-colors', className)}
+      className={cn('text-gray-500 size-4 flex items-center hover:text-gray-900 transition-colors', className)}
       {...props}
     >
       {children}

@@ -1,4 +1,3 @@
-import { HiOutlinePhotograph } from 'react-icons/hi';
 import { useEditorContext } from '../context/editor-context';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Input } from '@/components/ui/input';
