@@ -8,7 +8,7 @@ type IconButtonWrapperProps = React.HTMLAttributes<HTMLDivElement> & {
 export const IconButtonWrapper = ({ children, className, ...props }: Readonly<IconButtonWrapperProps>) => (
   <div
     className={cn(
-      'h-full flex gap-2 items-center rounded-lg p-2 justify-center transition-all hover:bg-gray-100',
+      'h-full flex cursor-pointer gap-2 items-center rounded-lg p-2 justify-center transition-all hover:bg-gray-100',
       className
     )}
     {...props}
