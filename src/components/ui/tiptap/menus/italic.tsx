@@ -1,6 +1,8 @@
-import { GoItalic } from 'react-icons/go';
 import { useEditorContext } from '../context/editor-context';
 import { cn } from '@/lib/utils';
+import { ItalicIcon } from 'lucide-react';
+import { IconButtonWrapper } from './common/icon-button-wrapper';
+import { IconButton } from './common/icon-button';
 
 type Props = React.HTMLAttributes<HTMLElement>;
 
@@ -12,8 +14,12 @@ export const Italic = ({ className }: Readonly<Props>) => {
   const toggleItalic = () => editor.chain().toggleItalic().run();
 
   return (
-    <button type='button' className={cn('hover:bg-gray-200 p-1', className)} onClick={toggleItalic}>
-      <GoItalic className='size-6' />
-    </button>
+    <div className={cn('', className)} onClick={toggleItalic}>
+      <IconButtonWrapper>
+        <IconButton>
+          <ItalicIcon />
+        </IconButton>
+      </IconButtonWrapper>
+    </div>
   );
 };

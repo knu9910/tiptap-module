@@ -1,7 +1,8 @@
-import { MdFormatUnderlined } from 'react-icons/md';
-
 import { useEditorContext } from '../context/editor-context';
 import { cn } from '@/lib/utils';
+import { Underline } from 'lucide-react';
+import { IconButtonWrapper } from './common/icon-button-wrapper';
+import { IconButton } from './common/icon-button';
 
 type Props = React.HTMLAttributes<HTMLElement>;
 
@@ -13,8 +14,12 @@ export const UnderLine = ({ className }: Readonly<Props>) => {
   const toggleUnderline = () => editor.chain().toggleUnderline().run();
 
   return (
-    <button type='button' className={cn('hover:bg-gray-200 p-1', className)} onClick={toggleUnderline}>
-      <MdFormatUnderlined className='size-6' />
-    </button>
+    <div className={cn('', className)} onClick={toggleUnderline}>
+      <IconButtonWrapper>
+        <IconButton>
+          <Underline />
+        </IconButton>
+      </IconButtonWrapper>
+    </div>
   );
 };
