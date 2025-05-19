@@ -31,8 +31,8 @@ export const Img = ({ className }: Readonly<Props>) => {
         <IconButtonWrapper>
           <IconButton>
             <ImagePlus />
-            <span className="text-sm">Add</span>
           </IconButton>
+          <span className="text-sm hover:text-gray-900 text-gray-500">Add</span>
         </IconButtonWrapper>
       </PopoverTrigger>
       <PopoverContent className="w-96 p-6 space-y-4 bg-white rounded-xl shadow-lg border border-gray-100">
