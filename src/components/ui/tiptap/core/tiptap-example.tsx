@@ -25,6 +25,8 @@ import { useEffect } from 'react';
 import { useContentStore } from '@/components/ui/tiptap/plugin';
 import { cn } from '@/lib/utils';
 import { Separator } from '../menus/common/separator';
+import { Toolbar } from './toolbar';
+import { ScrollArea } from '../../scroll-area/scroll-area';
 
 type Props = React.HTMLAttributes<HTMLElement> & {
   keyPath?: string;
@@ -44,31 +46,13 @@ export const TiptapExample = ({ keyPath, className, content }: Props) => {
 
   return (
     <div className={cn('border rounded-xl', className)}>
-      <div className={cn('flex items-center py-1 px-4 border-b')}>
-        <TipTapFontStyle />
-        <Separator />
-        <TipTapFontSize />
-        <Separator />
-        <TipTapFontColor />
-        <Highlight />
-        <Separator />
-        <Bold />
-        <Italic />
-        <UnderLine />
-        <Strike />
-        <UrlLink />
-        <Separator />
-        <TextAlignLeft />
-        <TextAlignCenter />
-        <TextAlignRight />
-        <TextAlignJustify />
-        <Separator />
-        <Img />
-      </div>
-      <EditorContent
-        editor={editor}
-        className={cn('p-6 min-h-[400px] border-none  [&>.tiptap]:!outline-none', className)}
-      />
+      <Toolbar />
+      <ScrollArea className="h-[400px] max-h-[400px] overflow-y-auto">
+        <EditorContent
+          editor={editor}
+          className={cn('p-6 min-h-[400px] border-none [&>.tiptap]:!outline-none', className)}
+        />
+      </ScrollArea>
     </div>
   );
 };
