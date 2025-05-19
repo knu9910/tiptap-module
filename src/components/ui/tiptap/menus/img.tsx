@@ -35,16 +35,25 @@ export const Img = ({ className }: Readonly<Props>) => {
           <span className="text-sm hover:text-gray-900 text-gray-500">Add</span>
         </IconButtonWrapper>
       </PopoverTrigger>
-      <PopoverContent className="w-96 p-6 space-y-4 bg-white rounded-xl shadow-lg border border-gray-100">
-        <div className="space-y-4">
-          <h3 className="text-lg font-semibold text-gray-900">이미지 추가</h3>
-          <Input
-            type="file"
-            accept="image/*"
-            onChange={insertLocalImage}
-            className="w-full cursor-pointer file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-medium file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 transition-all"
-          />
+      <PopoverContent className="w-96 p-6 space-y-5 bg-white rounded-2xl shadow-2xl border border-gray-100">
+        <div className="space-y-2">
+          <h3 className="text-lg font-bold text-gray-900">이미지 추가</h3>
+          <p className="text-xs text-gray-500">JPG, PNG, GIF 등 다양한 이미지를 업로드할 수 있습니다.</p>
         </div>
+        <label className="block">
+          <input type="file" accept="image/*" onChange={insertLocalImage} className="hidden" id="image-upload-input" />
+          <span className="flex items-center justify-center w-full h-32 border-2 border-dashed border-gray-200 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors">
+            <span className="text-gray-400 text-sm">
+              클릭하여 이미지를 선택하거나
+              <br />
+              여기로 드래그하세요
+            </span>
+          </span>
+        </label>
+        {/* 미리보기 영역(선택 시) */}
+        {/* <div className="w-full flex justify-center">
+    <img src={previewUrl} alt="미리보기" className="max-h-32 rounded-md shadow" />
+  </div> */}
       </PopoverContent>
     </Popover>
   );

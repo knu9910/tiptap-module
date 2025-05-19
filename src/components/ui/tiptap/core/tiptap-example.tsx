@@ -53,7 +53,7 @@ export const TiptapExample = ({ keyPath, className, content }: Props) => {
       </div>
       <EditorContent
         editor={editor}
-        className={cn('p-6 min-h-[400px] border-none [&>.tiptap]:h-10 [&>.tiptap]:!outline-none', className)}
+        className={cn('p-6 min-h-[400px] border-none  [&>.tiptap]:!outline-none', className)}
       />
     </div>
   );
