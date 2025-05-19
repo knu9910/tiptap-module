@@ -16,6 +16,10 @@ import {
   LoadContent,
   Preview,
   UrlLink,
+  TextAlignLeft,
+  TextAlignRight,
+  TextAlignCenter,
+  TextAlignJustify,
 } from '../menus';
 import { useEffect } from 'react';
 import { useContentStore } from '@/components/ui/tiptap/plugin';
@@ -53,6 +57,11 @@ export const TiptapExample = ({ keyPath, className, content }: Props) => {
         <UnderLine />
         <Strike />
         <UrlLink />
+        <Separator />
+        <TextAlignLeft />
+        <TextAlignCenter />
+        <TextAlignRight />
+        <TextAlignJustify />
         <Separator />
         <Img />
       </div>
