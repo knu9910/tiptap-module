@@ -27,7 +27,7 @@ export const TipTapFontSize = ({ className }: Readonly<Props>) => {
       <Select onValueChange={changeFontSize}>
         <SelectTrigger
           className={cn(
-            'group w-fit h-8 mr-2 focus:outline-none focus:ring-0 px-2 flex items-center gap-1.5 rounded-md border border-gray-200 bg-white hover:bg-gray-100 transition-colors cursor-pointer',
+            'group w-fit border-none shadow-none mr-2 focus:outline-none focus:ring-0 px-2 flex items-center gap-1.5 rounded-md border border-gray-200 bg-white hover:bg-gray-100 transition-colors cursor-pointer',
             className
           )}
         >

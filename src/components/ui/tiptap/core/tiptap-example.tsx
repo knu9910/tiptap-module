@@ -20,6 +20,7 @@ import {
 import { useEffect } from 'react';
 import { useContentStore } from '@/components/ui/tiptap/plugin';
 import { cn } from '@/lib/utils';
+import { Separator } from '../menus/common/separator';
 
 type Props = React.HTMLAttributes<HTMLElement> & {
   keyPath?: string;
@@ -39,16 +40,20 @@ export const TiptapExample = ({ keyPath, className, content }: Props) => {
 
   return (
     <div className={cn('border rounded-xl', className)}>
-      <div className={cn('flex align-center py-3 px-4 border-b')}>
+      <div className={cn('flex items-center py-1 px-4 border-b')}>
         <TipTapFontStyle />
+        <Separator />
         <TipTapFontSize />
+        <Separator />
         <TipTapFontColor />
+        <Highlight />
+        <Separator />
         <Bold />
         <Italic />
         <UnderLine />
         <Strike />
-        <Highlight />
         <UrlLink />
+        <Separator />
         <Img />
       </div>
       <EditorContent
