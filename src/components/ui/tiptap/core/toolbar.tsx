@@ -13,7 +13,6 @@ import { UrlLink } from '../menus/url-link';
 import { TextAlignLeft } from '../menus/text-align-left';
 import { TextAlignCenter } from '../menus/text-align-center';
 import { TextAlignRight } from '../menus/text-align-right';
-import { TextAlignJustify } from '../menus/text-align-justify';
 import { Img } from '../menus/img';
 import { Table } from '../menus/table';
 export const Toolbar = ({ className }: { className?: string }) => (
@@ -36,7 +35,6 @@ export const Toolbar = ({ className }: { className?: string }) => (
     <TextAlignLeft />
     <TextAlignCenter />
     <TextAlignRight />
-    <TextAlignJustify />
     <Separator />
     <Img />
   </div>
