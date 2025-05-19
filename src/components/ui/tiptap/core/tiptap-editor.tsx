@@ -16,8 +16,8 @@ export const TiptapEditor = ({ className, content }: Props) => {
   const { setContent } = useContentStore();
 
   useEffect(() => {
-    if (content) editor.commands.setContent(content);
-    setContent(content || '');
+    // if (content) editor.commands.setContent(content);
+    // setContent(content || '');
   }, []);
 
   if (!editor) return null;
