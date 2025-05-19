@@ -1,6 +1,6 @@
-"use client";
-import { EditorContent } from "@tiptap/react";
-import { useEditorContext } from "../context/editor-context";
+'use client';
+import { EditorContent } from '@tiptap/react';
+import { useEditorContext } from '../context/editor-context';
 import {
   TipTapFontStyle,
   TipTapFontColor,
@@ -16,10 +16,10 @@ import {
   LoadContent,
   Preview,
   UrlLink,
-} from "../menus";
-import { useEffect } from "react";
-import { useContentStore } from "@/components/ui/tiptap/plugin";
-import { cn } from "@/lib/utils";
+} from '../menus';
+import { useEffect } from 'react';
+import { useContentStore } from '@/components/ui/tiptap/plugin';
+import { cn } from '@/lib/utils';
 
 type Props = React.HTMLAttributes<HTMLElement> & {
   keyPath?: string;
@@ -32,14 +32,14 @@ export const TiptapExample = ({ keyPath, className, content }: Props) => {
 
   useEffect(() => {
     if (content) editor.commands.setContent(content);
-    setContent(content || "");
+    setContent(content || '');
   }, []);
 
   if (!editor) return null;
 
   return (
-    <div className={cn("border rounded-xl", className)}>
-      <div className={cn("flex align-center py-3 px-4 border-b")}>
+    <div className={cn('border rounded-xl', className)}>
+      <div className={cn('flex align-center py-3 px-4 border-b')}>
         <TipTapFontStyle />
         <TipTapFontSize />
         <TipTapFontColor />
@@ -53,10 +53,7 @@ export const TiptapExample = ({ keyPath, className, content }: Props) => {
       </div>
       <EditorContent
         editor={editor}
-        className={cn(
-          "p-6 min-h-[400px] border-none [&>.tiptap]:h-10 [&>.tiptap]:!outline-none",
-          className
-        )}
+        className={cn('p-6 min-h-[400px] border-none [&>.tiptap]:h-10 [&>.tiptap]:!outline-none', className)}
       />
     </div>
   );

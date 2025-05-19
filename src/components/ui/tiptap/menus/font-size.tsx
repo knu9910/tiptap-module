@@ -2,6 +2,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Pxs } from '../plugin/tiptap-font-config/constants';
 import { useEditorContext } from '../context/editor-context';
 import { cn } from '@/lib/utils';
+import { TextCursorInput } from 'lucide-react';
+import { IconButtonWrapper } from './common/icon-button-wrapper';
+import { IconButton } from './common/icon-button';
 
 type Props = React.HTMLAttributes<HTMLElement>;
 
@@ -24,15 +27,24 @@ export const TipTapFontSize = ({ className }: Readonly<Props>) => {
       <Select onValueChange={changeFontSize}>
         <SelectTrigger
           className={cn(
-            'hover:bg-gray-200 p-2 rounded font-bold flex justify-center w-1/12 px-2 cursor-pointer',
-            className,
+            'group w-fit h-8 mr-2 focus:outline-none focus:ring-0 px-2 flex items-center gap-1.5 rounded-md border border-gray-200 bg-white hover:bg-gray-100 transition-colors cursor-pointer',
+            className
           )}
         >
-          <SelectValue placeholder={'12px'} /> {/* 선택된 폰트 크기를 표시 */}
+          <IconButtonWrapper>
+            <IconButton>
+              <TextCursorInput className="" />
+            </IconButton>
+          </IconButtonWrapper>
+          <SelectValue placeholder={'12px'} className="text-sm text-gray-700" />
         </SelectTrigger>
-        <SelectContent className='h-72 w-48 rounded-md border overflow-y-auto'>
+        <SelectContent className="rounded-md shadow-lg bg-white border border-gray-300 mt-1 h-72 w-32 overflow-y-auto">
           {Object.values(Pxs).map((px) => (
-            <SelectItem key={px} value={px}>
+            <SelectItem
+              key={px}
+              value={px}
+              className="cursor-pointer px-3 py-1.5 text-sm hover:bg-gray-100 focus:bg-gray-100 rounded transition-colors"
+            >
               {px}
             </SelectItem>
           ))}
