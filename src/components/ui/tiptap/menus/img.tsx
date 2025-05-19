@@ -29,10 +29,12 @@ export const Img = ({ className }: Readonly<Props>) => {
     <Popover>
       <PopoverTrigger className={cn('', className)}>
         <IconButtonWrapper>
-          <IconButton>
-            <ImagePlus />
-          </IconButton>
-          <span className="text-sm hover:text-gray-900 text-gray-500">Add</span>
+          <div className="flex items-center gap-1.5 group cursor-pointer">
+            <IconButton className="group-hover:text-gray-900">
+              <ImagePlus />
+            </IconButton>
+            <span className="text-sm text-gray-500 group-hover:text-gray-900 transition-colors">Add</span>
+          </div>
         </IconButtonWrapper>
       </PopoverTrigger>
       <PopoverContent className="w-96 p-6 space-y-5 bg-white rounded-2xl shadow-2xl border border-gray-100">
