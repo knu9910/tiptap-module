@@ -47,10 +47,10 @@ export const TiptapExample = ({ keyPath, className, content }: Props) => {
   return (
     <div className={cn('border rounded-xl', className)}>
       <Toolbar />
-      <ScrollArea className="h-[400px] max-h-[400px] overflow-y-auto">
+      <ScrollArea className="h-[400px]">
         <EditorContent
           editor={editor}
-          className={cn('p-6 min-h-[400px] border-none [&>.tiptap]:!outline-none', className)}
+          className={cn('p-6 min-h-[400px] border-none overflow-visible [&>.tiptap]:!outline-none', className)}
         />
       </ScrollArea>
     </div>

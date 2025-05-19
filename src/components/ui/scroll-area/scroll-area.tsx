@@ -12,8 +12,8 @@ const ScrollArea = React.forwardRef<
     variant?: 'default' | 'primary' | 'secondary' | 'green' | 'destructive'; // variant prop 추가
   }
 >(({ className, children, variant = 'default', ...props }, ref) => (
-  <ScrollAreaPrimitive.Root type="auto" className={cn('relative overflow-auto', className)} {...props}>
-    <ScrollAreaPrimitive.Viewport ref={ref} className="h-full w-full rounded-[inherit]">
+  <ScrollAreaPrimitive.Root type="auto" className={cn('relative', className)} {...props}>
+    <ScrollAreaPrimitive.Viewport ref={ref} className="h-full w-full rounded-[inherit] overflow-auto">
       {children}
     </ScrollAreaPrimitive.Viewport>
     <ScrollBar variant={variant} /> {/* variant 전달 */}
