@@ -1,39 +1,17 @@
 'use client';
 import { EditorContent } from '@tiptap/react';
 import { useEditorContext } from '../context/editor-context';
-import {
-  TipTapFontStyle,
-  TipTapFontColor,
-  TipTapFontSize,
-  Bold,
-  Italic,
-  UnderLine,
-  Strike,
-  Highlight,
-  Img,
-  YoutubeLink,
-  SavedContent,
-  LoadContent,
-  Preview,
-  UrlLink,
-  TextAlignLeft,
-  TextAlignRight,
-  TextAlignCenter,
-  TextAlignJustify,
-} from '../menus';
 import { useEffect } from 'react';
 import { useContentStore } from '@/components/ui/tiptap/plugin';
 import { cn } from '@/lib/utils';
-import { Separator } from '../menus/common/separator';
 import { Toolbar } from './toolbar';
 import { ScrollArea } from '../../scroll-area/scroll-area';
 
 type Props = React.HTMLAttributes<HTMLElement> & {
-  keyPath?: string;
   content?: string;
 };
 
-export const TiptapExample = ({ keyPath, className, content }: Props) => {
+export const TiptapEditor = ({ className, content }: Props) => {
   const editor = useEditorContext();
   const { setContent } = useContentStore();
 
