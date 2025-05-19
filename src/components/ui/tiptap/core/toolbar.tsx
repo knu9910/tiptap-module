@@ -15,7 +15,7 @@ import { TextAlignCenter } from '../menus/text-align-center';
 import { TextAlignRight } from '../menus/text-align-right';
 import { TextAlignJustify } from '../menus/text-align-justify';
 import { Img } from '../menus/img';
-
+import { Table } from '../menus/table';
 export const Toolbar = ({ className }: { className?: string }) => (
   <div className={cn('flex items-center py-1 px-4 border-b', className)}>
     <TipTapFontStyle />
@@ -30,6 +30,8 @@ export const Toolbar = ({ className }: { className?: string }) => (
     <UnderLine />
     <Strike />
     <UrlLink />
+    <Separator />
+    <Table />
     <Separator />
     <TextAlignLeft />
     <TextAlignCenter />

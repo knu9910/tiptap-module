@@ -12,6 +12,10 @@ import { CustomImage, YouTubeVideo } from '../extended';
 import Highlight from '@tiptap/extension-highlight';
 import TextAlign from '@tiptap/extension-text-align';
 import { useContentStore } from '../plugin';
+import Table from '@tiptap/extension-table';
+import TableRow from '@tiptap/extension-table-row';
+import TableHeader from '@tiptap/extension-table-header';
+import TableCell from '@tiptap/extension-table-cell';
 
 // 기본적인 Tiptap extensions 설정 (필요시 추가 가능)
 const EditorContext = createContext<Editor | null>(null);
@@ -40,6 +44,12 @@ export const EditorProvider = ({ children }: { children: ReactNode }) => {
           class: 'font-bold hover:text-orange-600 hover:underline', // TailwindCSS 클래스 적용
         },
       }),
+      Table.configure({
+        resizable: true,
+      }),
+      TableRow,
+      TableHeader,
+      TableCell,
     ],
     onUpdate: ({ editor }) => {
       const htmlContent = editor.getHTML();

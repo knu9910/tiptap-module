@@ -28,7 +28,12 @@ export const TiptapEditor = ({ className, content }: Props) => {
       <ScrollArea className="h-[400px]">
         <EditorContent
           editor={editor}
-          className={cn('p-6 min-h-[400px] border-none overflow-visible [&>.tiptap]:!outline-none', className)}
+          className={cn(
+            'p-6 min-h-[400px] border-none [&>.tiptap]:!outline-none',
+            '[&_th]:border [&_td]:border [&_th]:border-gray-300 [&_td]:border-gray-300 [&_th]:bg-gray-100 [&_th]:font-semibold [&_th]:text-gray-900 [&_td]:px-2 [&_td]:py-1 [&_th]:px-2 [&_th]:py-1',
+            '[&_.resize-cursor]:cursor-col-resize',
+            className
+          )}
         />
       </ScrollArea>
     </div>
