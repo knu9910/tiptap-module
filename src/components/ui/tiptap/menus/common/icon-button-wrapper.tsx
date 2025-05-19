@@ -10,7 +10,7 @@ export const IconButtonWrapper = ({ children, className, ...props }: Readonly<Ic
     <div
       className={cn(
         'h-full flex cursor-pointer gap-2 items-center rounded-lg p-2 justify-center transition-all hover:bg-gray-100',
-        '[&[data-state=on]]:bg-blue-50 [&[data-state=on]]:border [&[data-state=on]]:border-blue-200',
+        '[&[data-state=on]]:bg-blue-50 [&[data-state=on]]:border-blue-200',
         className
       )}
       {...props}

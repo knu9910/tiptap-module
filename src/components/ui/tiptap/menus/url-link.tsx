@@ -28,8 +28,8 @@ export const UrlLink = ({ className }: Readonly<Props>) => {
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger className={cn('', className)}>
-        <IconButtonWrapper>
-          <IconButton>
+        <IconButtonWrapper data-state={open ? 'on' : 'off'}>
+          <IconButton data-state={open ? 'on' : 'off'}>
             <Link />
           </IconButton>
         </IconButtonWrapper>

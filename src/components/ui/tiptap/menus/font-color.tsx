@@ -30,8 +30,8 @@ export const TipTapFontColor = ({ className }: Readonly<Props>) => {
     <>
       {/* 색상 선택 */}
       <Popover>
-        <PopoverTrigger className={cn('', className)}>
-          <IconButtonWrapper>
+        <PopoverTrigger asChild>
+          <IconButtonWrapper className={className}>
             <IconButton>
               <Pipette style={{ color: selectedColor }} className="" />
             </IconButton>
