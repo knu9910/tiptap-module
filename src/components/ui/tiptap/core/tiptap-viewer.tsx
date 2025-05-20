@@ -13,6 +13,10 @@ import Highlight from '@tiptap/extension-highlight';
 import { CustomImage, YouTubeVideo } from '../extended';
 import Link from '@tiptap/extension-link';
 import { cn } from '@/lib/utils';
+import Table from '@tiptap/extension-table';
+import TableRow from '@tiptap/extension-table-row';
+import TableHeader from '@tiptap/extension-table-header';
+import TableCell from '@tiptap/extension-table-cell';
 
 type Props = {
   className?: string;
@@ -42,6 +46,12 @@ export const TiptapViewer = ({ className, content }: Props) => {
           class: 'font-bold hover:text-orange-600 hover:underline', // TailwindCSS 클래스 적용
         },
       }),
+      Table.configure({
+        resizable: true,
+      }),
+      TableRow,
+      TableHeader,
+      TableCell,
     ],
     content,
     editable: false,
