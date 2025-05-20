@@ -15,3 +15,4 @@ export * from './url-link';
 export * from './text-align-right';
 export * from './text-align-center';
 export * from './text-align-left';
+export * from './table-context-menu';
