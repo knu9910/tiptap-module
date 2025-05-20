@@ -1,26 +1,53 @@
 import { create } from 'zustand';
+import cuid from 'cuid';
 
-type TiptapContent = {
-  content: string;
-  tempContent: string;
-
+type TiptapContentStore = {
+  contents: { [key: string]: string };
+  tempContents: { [key: string]: string };
+  setContent: (key: string, content: string) => void;
+  getContent: (key: string) => string;
   saveTempContent: (key: string, content: string) => void;
-  setContent: (content: string) => void;
   getLocalContent: (key: string) => void;
+  removeContent: (key: string) => void;
+  getTiptapKey: () => string;
 };
 
-export const useContentStore = create<TiptapContent>((set) => ({
-  content: '', // 초기 콘텐츠 값 설정
-  tempContent: '',
-
-  saveTempContent: (key: string, content: string) => {
-    set({ tempContent: content });
-    localStorage.setItem(`${key}content`, content); // 로컬 스토리지에 저장
+export const useContentStore = create<TiptapContentStore>((set, get) => ({
+  contents: {},
+  tempContents: {},
+  setContent: (key, content) =>
+    set((state) => ({
+      contents: { ...state.contents, [key]: content },
+    })),
+  getContent: (key) => get().contents[key] || '',
+  saveTempContent: (key, content) => {
+    set((state) => ({
+      tempContents: { ...state.tempContents, [key]: content },
+    }));
+    localStorage.setItem(`${key}content`, content);
     alert('임시 저장되었습니다.');
   },
-  getLocalContent: (key: string) => {
+  getLocalContent: (key) => {
     const localTempContent = localStorage.getItem(`${key}content`);
-    if (localTempContent) set({ tempContent: localTempContent });
+    if (localTempContent) {
+      set((state) => ({
+        tempContents: { ...state.tempContents, [key]: localTempContent },
+      }));
+    }
   },
-  setContent: (content: string) => set({ content }), // 실시간 콘텐츠 업데이트
+  removeContent: (key) =>
+    set((state) => {
+      const newContents = { ...state.contents };
+      delete newContents[key];
+      const newTempContents = { ...state.tempContents };
+      delete newTempContents[key];
+      return { contents: newContents, tempContents: newTempContents };
+    }),
+  getTiptapKey: () => {
+    const key = cuid();
+    set((state) => ({
+      contents: { ...state.contents, [key]: '' },
+    }));
+    return key;
+  },
 }));
