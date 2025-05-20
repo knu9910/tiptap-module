@@ -63,6 +63,47 @@ export const TableContextMenu = ({ className }: Readonly<Props>) => {
     setMenu(null);
   };
 
+  const buttonGroups = [
+    [
+      { label: '행 위에 추가', action: () => handleMenuAction(() => editor.chain().focus().addRowBefore().run()) },
+      { label: '행 아래에 추가', action: () => handleMenuAction(() => editor.chain().focus().addRowAfter().run()) },
+      { label: '행 삭제', action: () => handleMenuAction(() => editor.chain().focus().deleteRow().run()) },
+    ],
+    [
+      { label: '열 왼쪽에 추가', action: () => handleMenuAction(() => editor.chain().focus().addColumnBefore().run()) },
+      {
+        label: '열 오른쪽에 추가',
+        action: () => handleMenuAction(() => editor.chain().focus().addColumnAfter().run()),
+      },
+      { label: '열 삭제', action: () => handleMenuAction(() => editor.chain().focus().deleteColumn().run()) },
+    ],
+    [
+      { label: '셀 병합', action: () => handleMenuAction(() => editor.chain().focus().mergeCells().run()) },
+      { label: '셀 분할', action: () => handleMenuAction(() => editor.chain().focus().splitCell().run()) },
+    ],
+    [
+      {
+        label: '셀 헤더/일반 변경',
+        action: () => handleMenuAction(() => editor.chain().focus().toggleHeaderCell().run()),
+      },
+      {
+        label: '행 헤더/일반 변경',
+        action: () => handleMenuAction(() => editor.chain().focus().toggleHeaderRow().run()),
+      },
+      {
+        label: '열 헤더/일반 변경',
+        action: () => handleMenuAction(() => editor.chain().focus().toggleHeaderColumn().run()),
+      },
+    ],
+    [
+      {
+        label: '테이블 삭제',
+        action: () => handleMenuAction(() => editor.chain().focus().deleteTable().run()),
+        danger: true,
+      },
+    ],
+  ];
+
   if (!menu) return null;
 
   return (
@@ -71,82 +112,20 @@ export const TableContextMenu = ({ className }: Readonly<Props>) => {
       style={{ position: 'fixed', top: menu.y, left: menu.x, zIndex: 9999 }}
       className={cn('bg-white border rounded shadow-lg p-2 flex flex-col gap-1 min-w-[160px]', className)}
     >
-      <button
-        onClick={() => handleMenuAction(() => editor.chain().focus().addRowBefore().run())}
-        className="hover:bg-gray-100 px-2 py-1 text-left"
-      >
-        행 위에 추가
-      </button>
-      <button
-        onClick={() => handleMenuAction(() => editor.chain().focus().addRowAfter().run())}
-        className="hover:bg-gray-100 px-2 py-1 text-left"
-      >
-        행 아래에 추가
-      </button>
-      <button
-        onClick={() => handleMenuAction(() => editor.chain().focus().deleteRow().run())}
-        className="hover:bg-gray-100 px-2 py-1 text-left"
-      >
-        행 삭제
-      </button>
-      <hr className="my-1" />
-      <button
-        onClick={() => handleMenuAction(() => editor.chain().focus().addColumnBefore().run())}
-        className="hover:bg-gray-100 px-2 py-1 text-left"
-      >
-        열 왼쪽에 추가
-      </button>
-      <button
-        onClick={() => handleMenuAction(() => editor.chain().focus().addColumnAfter().run())}
-        className="hover:bg-gray-100 px-2 py-1 text-left"
-      >
-        열 오른쪽에 추가
-      </button>
-      <button
-        onClick={() => handleMenuAction(() => editor.chain().focus().deleteColumn().run())}
-        className="hover:bg-gray-100 px-2 py-1 text-left"
-      >
-        열 삭제
-      </button>
-      <hr className="my-1" />
-      <button
-        onClick={() => handleMenuAction(() => editor.chain().focus().mergeCells().run())}
-        className="hover:bg-gray-100 px-2 py-1 text-left"
-      >
-        셀 병합
-      </button>
-      <button
-        onClick={() => handleMenuAction(() => editor.chain().focus().splitCell().run())}
-        className="hover:bg-gray-100 px-2 py-1 text-left"
-      >
-        셀 분할
-      </button>
-      <hr className="my-1" />
-      <button
-        onClick={() => handleMenuAction(() => editor.chain().focus().toggleHeaderCell().run())}
-        className="hover:bg-gray-100 px-2 py-1 text-left"
-      >
-        셀 th/td 토글
-      </button>
-      <button
-        onClick={() => handleMenuAction(() => editor.chain().focus().toggleHeaderRow().run())}
-        className="hover:bg-gray-100 px-2 py-1 text-left"
-      >
-        행 th/td 토글
-      </button>
-      <button
-        onClick={() => handleMenuAction(() => editor.chain().focus().toggleHeaderColumn().run())}
-        className="hover:bg-gray-100 px-2 py-1 text-left"
-      >
-        열 th/td 토글
-      </button>
-      <hr className="my-1" />
-      <button
-        onClick={() => handleMenuAction(() => editor.chain().focus().deleteTable().run())}
-        className="hover:bg-red-100 text-red-600 px-2 py-1 text-left"
-      >
-        테이블 삭제
-      </button>
+      {buttonGroups.map((group, groupIdx) => (
+        <div key={groupIdx}>
+          {group.map(({ label, action, danger }: any) => (
+            <button
+              key={label}
+              onClick={action}
+              className={cn('hover:bg-gray-100 px-2 py-1 text-left w-full', danger && 'hover:bg-red-100 text-red-600')}
+            >
+              {label}
+            </button>
+          ))}
+          {groupIdx < buttonGroups.length - 1 && <hr className="my-1" />}
+        </div>
+      ))}
     </div>
   );
 };
