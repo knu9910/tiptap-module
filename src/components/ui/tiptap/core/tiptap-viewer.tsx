@@ -23,10 +23,14 @@ import { useContentStore } from '../plugin';
 type Props = {
   className?: string;
   keyId: string;
+  content?: string;
 };
 
-export const TiptapViewer = ({ className, keyId }: Props) => {
-  const content = useContentStore((s) => s.contents[keyId] || '');
+export const TiptapViewer = ({ className, keyId, content: propsContent }: Props) => {
+  const storeContent = useContentStore((s) => s.contents[keyId] || '');
+  // props content가 있으면 props content 사용, 없으면 store content 사용
+  const finalContent = propsContent ?? storeContent;
+
   const editor = useEditor({
     extensions: [
       Color,
@@ -56,16 +60,16 @@ export const TiptapViewer = ({ className, keyId }: Props) => {
       TableHeader,
       TableCell,
     ],
-    content,
+    content: finalContent,
     editable: false,
     immediatelyRender: false,
   });
 
   useEffect(() => {
-    if (editor && editor.getHTML() !== content) {
-      editor.commands.setContent(content);
+    if (editor && editor.getHTML() !== finalContent) {
+      editor.commands.setContent(finalContent);
     }
-  }, [content, editor]);
+  }, [finalContent, editor]);
 
   if (!editor) return null;
 
