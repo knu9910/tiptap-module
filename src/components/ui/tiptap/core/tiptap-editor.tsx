@@ -25,7 +25,7 @@ export const TiptapEditor = ({ className, content }: Props) => {
   if (!editor) return null;
 
   return (
-    <div className={cn('border rounded-xl', className)}>
+    <div className={cn('border rounded-xl relative', className)}>
       <Toolbar />
       <ScrollArea className="h-[400px]">
         <EditorContent
