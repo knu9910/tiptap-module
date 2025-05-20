@@ -1,5 +1,5 @@
 'use client';
-import './tiptap-editor.module.css';
+import styles from './tiptap-editor.module.css';
 import { EditorContent } from '@tiptap/react';
 import { useEditorContext } from '../context/editor-context';
 import { useEffect } from 'react';
@@ -25,7 +25,7 @@ export const TiptapEditor = ({ className, content }: Props) => {
   if (!editor) return null;
 
   return (
-    <div className={cn('border rounded-xl relative', className)}>
+    <div className={`${cn('border rounded-xl relative', className)}`}>
       <Toolbar />
       <ScrollArea className="h-[400px]">
         <EditorContent
@@ -33,6 +33,7 @@ export const TiptapEditor = ({ className, content }: Props) => {
           className={cn(
             'p-6 min-h-[400px] border-none [&>.tiptap]:!outline-none',
             '[&_.resize-cursor]:cursor-col-resize',
+            styles.tiptapGlobalStyles,
             className
           )}
         />
