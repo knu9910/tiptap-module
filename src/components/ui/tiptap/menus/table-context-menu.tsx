@@ -19,6 +19,7 @@ export const TableContextMenu = ({ className }: Readonly<Props>) => {
         // 현재 selection이 CellSelection이면 저장
         const sel = editor?.state?.selection;
         if (sel && sel instanceof CellSelection) {
+          // instanceof CellSelection를 빼면 열을 병합할때 문제가 생김
           setLastCellSelection(sel);
         }
         setMenu({ x: event.clientX, y: event.clientY });
