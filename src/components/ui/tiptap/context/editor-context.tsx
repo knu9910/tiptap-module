@@ -49,7 +49,11 @@ export const EditorProvider = ({ children }: { children: ReactNode }) => {
       TableHeader,
       TableCell,
     ],
-
+    editorProps: {
+      attributes: {
+        class: 'h-full',
+      },
+    },
     immediatelyRender: false,
   });
 

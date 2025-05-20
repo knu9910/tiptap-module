@@ -11,9 +11,10 @@ import { TableContextMenu } from '../menus/table-context-menu';
 
 type Props = React.HTMLAttributes<HTMLElement> & {
   keyId: string;
+  height?: number;
 };
 
-export const TiptapEditor = ({ className, keyId }: Props) => {
+export const TiptapEditor = ({ className, keyId, height = 400 }: Props) => {
   const editor = useEditorContext();
   const { getContent, setContent } = useContentStore();
 
@@ -40,15 +41,16 @@ export const TiptapEditor = ({ className, keyId }: Props) => {
   return (
     <div className={`${cn('border rounded-xl relative', className)}`}>
       <Toolbar />
-      <ScrollArea className="h-[400px]">
+      <ScrollArea style={{ height: `${height}px` }}>
         <EditorContent
           editor={editor}
           className={cn(
-            'p-6 min-h-[400px] border-none [&>.tiptap]:!outline-none',
+            'p-6 border-none [&>.tiptap]:!outline-none',
             '[&_.resize-cursor]:cursor-col-resize',
             styles.tiptapGlobalStyles,
             className
           )}
+          style={{ height: `${height}px` }}
         />
         <TableContextMenu />
       </ScrollArea>
