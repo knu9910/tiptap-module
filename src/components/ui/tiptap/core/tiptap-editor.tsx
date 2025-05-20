@@ -10,17 +10,30 @@ import { ScrollArea } from '../../scroll-area/scroll-area';
 import { TableContextMenu } from '../menus/table-context-menu';
 
 type Props = React.HTMLAttributes<HTMLElement> & {
-  content?: string;
+  keyId: string;
 };
 
-export const TiptapEditor = ({ className, content }: Props) => {
+export const TiptapEditor = ({ className, keyId }: Props) => {
   const editor = useEditorContext();
-  const { setContent } = useContentStore();
+  const { getContent, setContent } = useContentStore();
 
   useEffect(() => {
-    // if (content) editor.commands.setContent(content);
-    // setContent(content || '');
-  }, []);
+    const initial = getContent(keyId);
+    if (editor && initial && editor.getHTML() !== initial) {
+      editor.commands.setContent(initial);
+    }
+  }, [editor, keyId, getContent]);
+
+  useEffect(() => {
+    if (!editor) return;
+    const handler = () => {
+      setContent(keyId, editor.getHTML());
+    };
+    editor.on('update', handler);
+    return () => {
+      editor.off('update', handler);
+    };
+  }, [editor, setContent, keyId]);
 
   if (!editor) return null;
 

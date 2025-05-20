@@ -11,7 +11,6 @@ import FontSize from 'tiptap-extension-font-size';
 import { CustomImage, YouTubeVideo } from '../extended';
 import Highlight from '@tiptap/extension-highlight';
 import TextAlign from '@tiptap/extension-text-align';
-import { useContentStore } from '../plugin';
 import Table from '@tiptap/extension-table';
 import TableRow from '@tiptap/extension-table-row';
 import TableHeader from '@tiptap/extension-table-header';
@@ -21,7 +20,6 @@ import TableCell from '@tiptap/extension-table-cell';
 const EditorContext = createContext<Editor | null>(null);
 
 export const EditorProvider = ({ children }: { children: ReactNode }) => {
-  const { content, setContent } = useContentStore();
   const editor = useEditor({
     extensions: [
       Color,
@@ -51,10 +49,7 @@ export const EditorProvider = ({ children }: { children: ReactNode }) => {
       TableHeader,
       TableCell,
     ],
-    onUpdate: ({ editor }) => {
-      const htmlContent = editor.getHTML();
-      setContent(htmlContent); // 편집기 내용 업데이트 시 상태도 갱신
-    },
+
     immediatelyRender: false,
   });
 

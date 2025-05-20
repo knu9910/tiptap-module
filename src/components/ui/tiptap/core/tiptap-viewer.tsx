@@ -1,5 +1,6 @@
 'use client';
 
+import styles from './tiptap-editor.module.css';
 import React, { useEffect } from 'react';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
@@ -17,13 +18,15 @@ import Table from '@tiptap/extension-table';
 import TableRow from '@tiptap/extension-table-row';
 import TableHeader from '@tiptap/extension-table-header';
 import TableCell from '@tiptap/extension-table-cell';
+import { useContentStore } from '../plugin';
 
 type Props = {
   className?: string;
-  content: string; // content는 반드시 string 타입으로 받습니다.
+  keyId: string;
 };
 
-export const TiptapViewer = ({ className, content }: Props) => {
+export const TiptapViewer = ({ className, keyId }: Props) => {
+  const content = useContentStore((s) => s.contents[keyId] || '');
   const editor = useEditor({
     extensions: [
       Color,
@@ -43,7 +46,7 @@ export const TiptapViewer = ({ className, content }: Props) => {
         openOnClick: true,
         autolink: true,
         HTMLAttributes: {
-          class: 'font-bold hover:text-orange-600 hover:underline', // TailwindCSS 클래스 적용
+          class: 'font-bold hover:text-orange-600 hover:underline',
         },
       }),
       Table.configure({
@@ -59,14 +62,19 @@ export const TiptapViewer = ({ className, content }: Props) => {
   });
 
   useEffect(() => {
-    if (editor) {
-      editor.commands.setContent(content); // 상태에서 content가 변경되면 에디터 내용도 업데이트
+    if (editor && editor.getHTML() !== content) {
+      editor.commands.setContent(content);
     }
-  }, [content, editor]); // content나 editor가 변경될 때마다 실행
+  }, [content, editor]);
 
   if (!editor) return null;
 
-  return <EditorContent editor={editor} className={cn('', className)} />;
+  return (
+    <EditorContent
+      editor={editor}
+      className={cn('p-6 min-h-[400px]', '[&_.resize-cursor]:cursor-col-resize', styles.tiptapGlobalStyles, className)}
+    />
+  );
 };
 
 export default TiptapViewer;
