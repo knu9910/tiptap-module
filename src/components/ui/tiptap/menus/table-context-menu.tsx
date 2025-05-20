@@ -29,25 +29,16 @@ export const TableContextMenu = ({ className }: Readonly<Props>) => {
     const handleClick = () => {
       if (menu) setMenu(null);
     };
-
+    const preventWheel = (e: WheelEvent) => e.preventDefault();
+    document.addEventListener('wheel', preventWheel, { passive: false });
     document.addEventListener('contextmenu', handleContextMenu);
     document.addEventListener('click', handleClick);
     return () => {
       document.removeEventListener('contextmenu', handleContextMenu);
       document.removeEventListener('click', handleClick);
+      document.removeEventListener('wheel', preventWheel);
     };
   }, [menu, editor]);
-
-  // 메뉴가 열려 있을 때 스크롤 막기
-  useEffect(() => {
-    if (menu) {
-      const originalOverflow = document.body.style.overflow;
-      document.body.style.overflow = 'hidden';
-      return () => {
-        document.body.style.overflow = originalOverflow;
-      };
-    }
-  }, [menu]);
 
   // selection 복원 함수
   const restoreSelection = () => {
