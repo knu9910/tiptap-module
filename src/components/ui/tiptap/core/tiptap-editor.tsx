@@ -6,6 +6,7 @@ import { useContentStore } from '@/components/ui/tiptap/plugin';
 import { cn } from '@/lib/utils';
 import { Toolbar } from './toolbar';
 import { ScrollArea } from '../../scroll-area/scroll-area';
+import { TableContextMenu } from '../menus/table-context-menu';
 
 type Props = React.HTMLAttributes<HTMLElement> & {
   content?: string;
@@ -35,6 +36,7 @@ export const TiptapEditor = ({ className, content }: Props) => {
             className
           )}
         />
+        <TableContextMenu />
       </ScrollArea>
     </div>
   );
