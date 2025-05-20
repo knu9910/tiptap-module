@@ -31,17 +31,23 @@ export const TableContextMenu = ({ className }: Readonly<Props>) => {
       if (menu) setMenu(null);
     };
     const preventWheel = (e: WheelEvent) => e.preventDefault();
-    document.addEventListener('wheel', preventWheel, { passive: false });
     document.addEventListener('contextmenu', handleContextMenu);
     document.addEventListener('click', handleClick);
     return () => {
       document.removeEventListener('contextmenu', handleContextMenu);
       document.removeEventListener('click', handleClick);
-      document.removeEventListener('wheel', preventWheel);
     };
   }, [menu, editor]);
 
-  // selection 복원 함수
+  useEffect(() => {
+    if (!menu) return;
+    const preventWheel = (e: WheelEvent) => e.preventDefault();
+    document.addEventListener('wheel', preventWheel, { passive: false });
+    return () => {
+      document.removeEventListener('wheel', preventWheel);
+    };
+  }, [menu]);
+
   const restoreSelection = () => {
     if (lastCellSelection && editor) {
       editor.view.dispatch(editor.state.tr.setSelection(lastCellSelection));
