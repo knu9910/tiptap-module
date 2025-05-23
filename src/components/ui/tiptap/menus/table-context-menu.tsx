@@ -13,14 +13,16 @@ export const TableContextMenu = ({ className, editor }: Readonly<Props>) => {
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!editor) return;
+    const dom = editor.view.dom;
     const handleContextMenu = (event: MouseEvent) => {
+      if (!dom.contains(event.target as Node)) return; // 자기 editor 영역만 반응
       const target = event.target as HTMLElement;
       if (target.closest('td, th')) {
         event.preventDefault();
         // 현재 selection이 CellSelection이면 저장
         const sel = editor?.state?.selection;
         if (sel && sel instanceof CellSelection) {
-          // instanceof CellSelection를 빼면 열을 병합할때 문제가 생김
           setLastCellSelection(sel);
         }
         setMenu({ x: event.clientX, y: event.clientY });
@@ -31,11 +33,11 @@ export const TableContextMenu = ({ className, editor }: Readonly<Props>) => {
     const handleClick = () => {
       if (menu) setMenu(null);
     };
-    document.addEventListener('contextmenu', handleContextMenu);
-    document.addEventListener('click', handleClick);
+    dom.addEventListener('contextmenu', handleContextMenu);
+    window.addEventListener('click', handleClick);
     return () => {
-      document.removeEventListener('contextmenu', handleContextMenu);
-      document.removeEventListener('click', handleClick);
+      dom.removeEventListener('contextmenu', handleContextMenu);
+      window.removeEventListener('click', handleClick);
     };
   }, [menu, editor]);
 
@@ -48,16 +50,21 @@ export const TableContextMenu = ({ className, editor }: Readonly<Props>) => {
     };
   }, [menu]);
 
-  const restoreSelection = () => {
-    if (lastCellSelection && editor) {
-      editor.view.dispatch(editor.state.tr.setSelection(lastCellSelection));
-    }
-  };
-
   // 공통 핸들러 함수
   const handleMenuAction = (command: () => void) => {
-    restoreSelection();
-    command();
+    if (lastCellSelection && editor) {
+      try {
+        editor.view.dispatch(editor.state.tr.setSelection(lastCellSelection));
+        command();
+      } catch (e) {
+        // selection이 유효하지 않으면 그냥 focus만 하고 명령 실행
+        editor.chain().focus().run();
+        command();
+      }
+    } else {
+      editor.chain().focus().run();
+      command();
+    }
     setMenu(null);
   };
 
