@@ -1,7 +1,20 @@
 'use client';
 import styles from './tiptap-editor.module.css';
-import { EditorContent } from '@tiptap/react';
-import { useEditorContext } from '../context/editor-context';
+import { EditorContent, useEditor } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit';
+import Color from '@tiptap/extension-color';
+import Underline from '@tiptap/extension-underline';
+import FontFamily from '@tiptap/extension-font-family';
+import TextStyle from '@tiptap/extension-text-style';
+import Link from '@tiptap/extension-link';
+import FontSize from 'tiptap-extension-font-size';
+import { CustomImage, YouTubeVideo } from '../extended';
+import Highlight from '@tiptap/extension-highlight';
+import TextAlign from '@tiptap/extension-text-align';
+import Table from '@tiptap/extension-table';
+import TableRow from '@tiptap/extension-table-row';
+import TableHeader from '@tiptap/extension-table-header';
+import TableCell from '@tiptap/extension-table-cell';
 import { useEffect } from 'react';
 import { useContentStore } from '@/components/ui/tiptap/plugin';
 import { cn } from '@/lib/utils';
@@ -15,12 +28,51 @@ type Props = React.HTMLAttributes<HTMLElement> & {
 };
 
 export const TiptapEditor = ({ className, keyId, height = 400 }: Props) => {
-  const editor = useEditorContext();
   const { getContent, setContent } = useContentStore();
+  const initialContent = getContent(keyId);
+
+  const editor = useEditor({
+    extensions: [
+      Color,
+      Highlight.configure({ multicolor: true }),
+      StarterKit,
+      Underline,
+      FontFamily,
+      TextStyle,
+      FontSize,
+      CustomImage,
+      YouTubeVideo,
+      TextAlign.configure({
+        types: ['paragraph', 'heading'],
+        alignments: ['left', 'right', 'center'],
+      }),
+      Link.configure({
+        openOnClick: true,
+        autolink: true,
+        HTMLAttributes: {
+          class: 'font-bold hover:text-orange-600 hover:underline',
+        },
+      }),
+      Table.configure({
+        resizable: true,
+      }),
+      TableRow,
+      TableHeader,
+      TableCell,
+    ],
+    content: initialContent,
+    editorProps: {
+      attributes: {
+        class: 'h-full',
+      },
+    },
+    immediatelyRender: false,
+  });
 
   useEffect(() => {
+    if (!editor) return;
     const initial = getContent(keyId);
-    if (editor && initial && editor.getHTML() !== initial) {
+    if (initial && editor.getHTML() !== initial) {
       editor.commands.setContent(initial);
     }
   }, [editor, keyId, getContent]);
@@ -40,7 +92,7 @@ export const TiptapEditor = ({ className, keyId, height = 400 }: Props) => {
 
   return (
     <div className={`${cn('border rounded-xl relative', className)}`}>
-      <Toolbar />
+      <Toolbar editor={editor} />
       <ScrollArea style={{ height: `${height}px` }}>
         <EditorContent
           editor={editor}
@@ -52,7 +104,7 @@ export const TiptapEditor = ({ className, keyId, height = 400 }: Props) => {
           )}
           style={{ height: `${height}px` }}
         />
-        <TableContextMenu />
+        <TableContextMenu editor={editor} />
       </ScrollArea>
     </div>
   );

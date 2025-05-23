@@ -1,14 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import { cn } from '@/lib/utils';
-import { useEditorContext } from '../context/editor-context';
+import { Editor } from '@tiptap/react';
 import { CellSelection } from '@tiptap/pm/tables';
 
-type Props = React.HTMLAttributes<HTMLElement>;
+type Props = React.HTMLAttributes<HTMLElement> & {
+  editor: Editor;
+};
 
-export const TableContextMenu = ({ className }: Readonly<Props>) => {
+export const TableContextMenu = ({ className, editor }: Readonly<Props>) => {
   const [menu, setMenu] = useState<{ x: number; y: number } | null>(null);
   const [lastCellSelection, setLastCellSelection] = useState<any>(null);
-  const editor = useEditorContext();
   const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -30,7 +31,6 @@ export const TableContextMenu = ({ className }: Readonly<Props>) => {
     const handleClick = () => {
       if (menu) setMenu(null);
     };
-    const preventWheel = (e: WheelEvent) => e.preventDefault();
     document.addEventListener('contextmenu', handleContextMenu);
     document.addEventListener('click', handleClick);
     return () => {
