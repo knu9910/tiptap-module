@@ -2,27 +2,23 @@
 import { EditorProvider } from '@/components/ui/tiptap/context/editor-context';
 import { cn } from '@/lib/utils';
 import { TiptapEditor, TiptapViewer } from '@/components/ui/tiptap/core';
-import { useContentStore } from '@/components/ui/tiptap/plugin';
 
 type Props = React.HTMLAttributes<HTMLElement>;
 
 export const ComponentExample = ({ className }: Readonly<Props>) => {
-  const { getTiptapKey } = useContentStore();
-  const keyId = getTiptapKey();
-  const keyId2 = getTiptapKey();
   return (
     <div className={cn('', className)}>
       <EditorProvider>
-        <TiptapEditor keyId={keyId} />
+        <TiptapEditor keyId={'12'} />
         <h2 className="mb-3 mt-6 text-xl font-semibold">너는 viewer야 </h2>
       </EditorProvider>
-      <TiptapViewer className="border p-4" keyId={keyId} />
+      <TiptapViewer className="border p-4" keyId={'12'} />
 
       <EditorProvider>
-        <TiptapEditor keyId={keyId2} />
+        <TiptapEditor keyId={'123'} />
         <h2 className="mb-3 mt-6 text-xl font-semibold">너는 viewer야 </h2>
       </EditorProvider>
-      <TiptapViewer className="border p-4" keyId={keyId2} />
+      <TiptapViewer className="border p-4" keyId={'123'} />
     </div>
   );
 };
