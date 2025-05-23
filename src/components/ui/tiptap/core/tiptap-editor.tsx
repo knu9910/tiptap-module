@@ -15,7 +15,7 @@ import Table from '@tiptap/extension-table';
 import TableRow from '@tiptap/extension-table-row';
 import TableHeader from '@tiptap/extension-table-header';
 import TableCell from '@tiptap/extension-table-cell';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { useContentStore } from '@/components/ui/tiptap/plugin';
 import { cn } from '@/lib/utils';
 import { Toolbar } from './toolbar';
@@ -25,11 +25,12 @@ import { TableContextMenu } from '../menus/table-context-menu';
 type Props = React.HTMLAttributes<HTMLElement> & {
   keyId: string;
   height?: number;
+  content?: string;
 };
 
-export const TiptapEditor = ({ className, keyId, height = 400 }: Props) => {
+export const TiptapEditor = ({ className, keyId, height = 400, content: initialContentProp }: Props) => {
   const { getContent, setContent } = useContentStore();
-  const initialContent = getContent(keyId);
+  const initialContent = initialContentProp ?? getContent(keyId);
 
   const editor = useEditor({
     extensions: [
@@ -68,6 +69,22 @@ export const TiptapEditor = ({ className, keyId, height = 400 }: Props) => {
     },
     immediatelyRender: false,
   });
+
+  const didSetInitialContent = useRef(false);
+  useEffect(() => {
+    if (!editor) return;
+    if (initialContentProp !== undefined && !didSetInitialContent.current) {
+      editor.commands.setContent(initialContentProp);
+      setContent(keyId, initialContentProp);
+      didSetInitialContent.current = true;
+    }
+  }, [editor, initialContentProp, keyId, setContent]);
+
+  useEffect(() => {
+    if (initialContentProp !== undefined) {
+      setContent(keyId, initialContentProp);
+    }
+  }, [initialContentProp, keyId, setContent]);
 
   useEffect(() => {
     if (!editor) return;
