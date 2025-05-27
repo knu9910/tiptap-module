@@ -7,14 +7,27 @@ import { Editor } from '@tiptap/react';
 
 type Props = React.HTMLAttributes<HTMLElement> & {
   editor: Editor;
+  onImageUpload?: (file: File) => Promise<string>;
 };
 
-export const Img = ({ className, editor }: Readonly<Props>) => {
+export const Img = ({ editor, onImageUpload, className }: Readonly<Props>) => {
   if (!editor) return null;
 
-  const insertLocalImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
+    if (!file) return;
+
+    if (onImageUpload) {
+      // onImageUpload prop이 제공된 경우: 서버에 업로드
+      try {
+        const imageUrl = await onImageUpload(file);
+        editor.chain().setImage({ src: imageUrl }).run();
+      } catch (error) {
+        console.error('이미지 업로드 실패:', error);
+        // 사용자에게 에러 메시지 표시
+      }
+    } else {
+      // onImageUpload prop이 없는 경우: Base64로 삽입
       const reader = new FileReader();
       reader.onloadend = () => {
         const base64Image = reader.result as string;
@@ -42,7 +55,7 @@ export const Img = ({ className, editor }: Readonly<Props>) => {
           <p className="text-xs text-gray-500">JPG, PNG, GIF 등 다양한 이미지를 업로드할 수 있습니다.</p>
         </div>
         <label className="block">
-          <input type="file" accept="image/*" onChange={insertLocalImage} className="hidden" id="image-upload-input" />
+          <input type="file" accept="image/*" onChange={handleFileChange} className="hidden" id="image-upload-input" />
           <span className="flex items-center justify-center w-full h-32 border-2 border-dashed border-gray-200 rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors">
             <span className="text-gray-400 text-sm">
               클릭하여 이미지를 선택하거나
