@@ -1,6 +1,6 @@
 'use client';
 import { cn } from '@/lib/utils';
-import { TiptapEditor, TiptapViewer } from '@/components/ui/tiptap/core';
+import { TiptapEditor, TiptapViewer } from '@/components/custom-ui/tiptap/core';
 
 type Props = React.HTMLAttributes<HTMLElement>;
 
