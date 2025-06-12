@@ -15,8 +15,8 @@ import Table from '@tiptap/extension-table';
 import TableRow from '@tiptap/extension-table-row';
 import TableHeader from '@tiptap/extension-table-header';
 import TableCell from '@tiptap/extension-table-cell';
-import { useEffect, useRef, useCallback } from 'react';
-import { useContentStore } from '@/components/custom-ui/tiptap/plugin';
+import { useEffect, useRef, useMemo } from 'react';
+import { useContentStore, useContentStoreSelector } from '@/components/custom-ui/tiptap/plugin';
 import { cn } from '@/lib/utils';
 import { Toolbar } from './toolbar';
 import { ScrollArea } from '../../scroll-area/scroll-area';
@@ -27,37 +27,23 @@ type Props = React.HTMLAttributes<HTMLElement> & {
   keyId: string;
   height?: number;
   onImageUpload?: (file: File) => Promise<string>;
+  onChange?: (content: string) => void;
   content?: string;
 };
 
-export const TiptapEditor = ({ className, keyId, height = 400, content: initialContentProp, onImageUpload }: Props) => {
+export const TiptapEditor = ({
+  className,
+  keyId,
+  height = 400,
+  content: initialContentProp,
+  onImageUpload,
+  onChange,
+}: Props) => {
   const { getContent, setContent } = useContentStore();
-  const initialContent = initialContentProp ?? getContent(keyId);
-  const saveTimeoutRef = useRef<any>(0);
-  const lastSaveTimeRef = useRef<number>(0);
+  // 특정 키만 구독하여 불필요한 리렌더링 방지
+  const { content: storedContent } = useContentStoreSelector(keyId);
 
-  // throttled 저장 함수 (너무 빈번한 저장 방지)
-  const throttledSave = useCallback(
-    (content: string) => {
-      const now = Date.now();
-      const timeSinceLastSave = now - lastSaveTimeRef.current;
-
-      if (timeSinceLastSave < 500) {
-        // 500ms 쓰로틀링
-        if (saveTimeoutRef.current) {
-          clearTimeout(saveTimeoutRef.current);
-        }
-        saveTimeoutRef.current = setTimeout(() => {
-          setContent(keyId, content);
-          lastSaveTimeRef.current = Date.now();
-        }, 500 - timeSinceLastSave);
-      } else {
-        setContent(keyId, content);
-        lastSaveTimeRef.current = now;
-      }
-    },
-    [keyId, setContent]
-  );
+  const initialContent = initialContentProp ?? storedContent ?? getContent(keyId);
 
   const editor = useEditor({
     extensions: [
@@ -96,42 +82,36 @@ export const TiptapEditor = ({ className, keyId, height = 400, content: initialC
     },
     immediatelyRender: false,
     // EditorContent 리렌더링 최적화
-
     shouldRerenderOnTransaction: false,
     onCreate: ({ editor }) => {
       // 에디터 생성 시 기본 폰트 크기와 폰트 설정
       editor.chain().selectAll().setFontSize('18px').setFontFamily(FontOptions['맑은 고딕']).run();
       editor.commands.blur();
     },
-    // onUpdate 이벤트를 여기서 직접 처리하여 성능 최적화
     onUpdate: ({ editor }) => {
-      throttledSave(editor.getHTML());
+      const content = editor.getHTML();
+      setContent(keyId, content);
+      onChange?.(content);
     },
   });
 
   const didSetInitialContent = useRef(false);
+
+  // 메모화된 초기 콘텐츠 설정 로직
+  const shouldSetInitialContent = useMemo(() => {
+    return initialContentProp !== undefined && !didSetInitialContent.current;
+  }, [initialContentProp]);
+
   useEffect(() => {
     if (!editor) return;
 
     // 초기값 설정 (최초 1회)
-    if (initialContentProp !== undefined && !didSetInitialContent.current) {
-      editor.commands.setContent(initialContentProp);
-      setContent(keyId, initialContentProp);
+    if (shouldSetInitialContent) {
+      editor.commands.setContent(initialContentProp!);
+      setContent(keyId, initialContentProp!);
       didSetInitialContent.current = true;
     }
-
-    // 스토어에서 복구
-    const saved = getContent(keyId);
-    if (saved && editor.getHTML() !== saved) {
-      editor.commands.setContent(saved);
-    }
-
-    return () => {
-      if (saveTimeoutRef.current) {
-        clearTimeout(saveTimeoutRef.current);
-      }
-    };
-  }, [editor, initialContentProp, keyId, setContent, getContent]);
+  }, [editor, shouldSetInitialContent, initialContentProp, keyId, setContent]);
 
   if (!editor) return null;
 

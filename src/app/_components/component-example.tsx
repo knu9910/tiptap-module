@@ -13,7 +13,7 @@ export const ComponentExample = ({ className }: Readonly<Props>) => {
 
       <TiptapEditor keyId={'123'} />
       <h2 className="mb-3 mt-6 text-xl font-semibold">너는 viewer야 </h2>
-      <TiptapViewer className="border p-4" keyId={'123'} />
+      <TiptapViewer content={'123'} className="border p-4" keyId={'123'} />
     </div>
   );
 };
