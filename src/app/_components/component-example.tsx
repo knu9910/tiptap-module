@@ -6,7 +6,7 @@ type Props = React.HTMLAttributes<HTMLElement>;
 
 export const ComponentExample = ({ className }: Readonly<Props>) => {
   return (
-    <div className={cn('w-300 p-2', className)}>
+    <div className={cn('w-300 p-10', className)}>
       <TiptapEditor keyId={'12'} />
       <h2 className="mb-3 mt-6 text-xl font-semibold">너는 viewer야 </h2>
       <TiptapViewer className="borderㅁㅁㅁㅁ p-4" keyId={'12'} />
